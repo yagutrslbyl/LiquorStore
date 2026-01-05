@@ -22,6 +22,8 @@ namespace LiquorStore
             pattern: "{area:exists}/{controller=Home}/{action=Admin}/{id?}"
                 );
 
+
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id:?}");

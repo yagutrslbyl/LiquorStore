@@ -31,11 +31,13 @@ namespace LiquorStore.Areas.Admin.Controllers
 
             return View();
         }
-        [HttpPost]
+        
 
         [HttpPost]
         public IActionResult Create(CreateProductVM productVM)
         {
+            ViewBag.Tags = _context.Tags.ToList();
+            ViewBag.Categories = _context.Categories.ToList();
             Product product = new Product
             {
                 Name = productVM.Name,
@@ -44,22 +46,20 @@ namespace LiquorStore.Areas.Admin.Controllers
                 Categories = new List<Category>(),
                 Tags = new List<Tag>()
             };
+            var categories = _context.Categories.Where(x => productVM.CategoryIds.Contains(x.ID)).ToList();
+            product.Categories = categories;
 
-            if (productVM.CategoryIds != null)
-            {
-                foreach (var catId in productVM.CategoryIds)
-                {
-                    product.Categories.Add(new Category { ID = catId });
-                }
-            }
+            var tags = _context.Tags.Where(x => productVM.TagIds.Contains(x.ID)).ToList();
+            product.Tags = tags;
 
-            if (productVM.TagIds != null)
-            {
-                foreach (var tagId in productVM.TagIds)
-                {
-                    product.Tags.Add(new Tag { ID = tagId });
-                }
-            }
+
+            //if (productVM.TagIds != null)
+            //{
+            //    foreach (var tagId in productVM.TagIds)
+            //    {
+            //        product.Tags.Add(new Tag { ID = tagId });
+            //    }
+            //}
 
             _context.Products.Add(product);
             _context.SaveChanges();

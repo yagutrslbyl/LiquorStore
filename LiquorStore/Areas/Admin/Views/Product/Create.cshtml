@@ -31,7 +31,7 @@
 
         <div class="form-group">
             <label asp-for="CategoryIds">Categories</label>
-            <select class="form-control" id="CategoryIds">
+            <select asp-for="CategoryIds" class="form-control" id="CategoryIds">
                 @foreach(var category in ViewBag.Categories)
                 {
                     <option value="@category.ID">@category.Name</option>
@@ -40,12 +40,9 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="CategoryIds">Categories</label>
-            <select class="form-control" id="CategoryIds">
-                @foreach (var tag in ViewBag.Tags)
-                {
-                    <option value="@tag.ID">@tag.Name</option>
-                }
+            <label asp-for="TagIds">Tags</label>
+            <select asp-for="TagIds" class="form-control" id="TagIds" asp-items="@( new SelectList(ViewBag.Tags,"ID","Name"))">
+              
             </select>
         </div>
 
